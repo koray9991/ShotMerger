@@ -99,10 +99,33 @@ public class Collision : MonoBehaviour
                     GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, Random.Range(-200, -300)));
                     StartCoroutine(EditRigidbody());
                 }
-               
+                if (other.tag == "Barrel")
+                {
+                    Time.timeScale = 0;
+                    if (!GameManager.Instance.Finish)
+                    {
+                        GameManager.Instance.GameOver = true;
+                        GameManager.Instance.GameOverPanel.SetActive(true);
+                    }
+                    else
+                    {
+                        GameManager.Instance.FinishPanel.SetActive(true);
+                    }
+                    
+                }
             }
            
             
+        }
+
+        if (other.tag == "Finish")
+        {
+            if (gameObject == Rush.Instance.cubes[0])
+            {
+                GameManager.Instance.Finish = true;
+                GunController.Instance.ZSpeed = 2;
+                GunController.Instance. MovementVector = new Vector3(0, 0, GunController.Instance.ZSpeed);
+            }
         }
     }
     private void Update()

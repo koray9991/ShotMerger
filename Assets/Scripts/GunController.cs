@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-    
+    public static GunController Instance;
     [SerializeField] float XSpeed;
-    [SerializeField] float ZSpeed;
+    float Vec=8;
+    public float ZSpeed;
     [SerializeField] float MaxX;
-    private Vector3 MovementVector;
+    public Vector3 MovementVector;
     private bool Go;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
         MovementVector = new Vector3(0, 0, ZSpeed);
@@ -33,13 +41,13 @@ public class GunController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            MovementVector.x = Input.GetAxis("Mouse X");
+            MovementVector.x = Input.GetAxis("Mouse X")*XSpeed;
         }
         else
         {
             MovementVector.x = 0;
         }
-        transform.Translate(XSpeed * Time.deltaTime * MovementVector);
+        transform.Translate(Vec * Time.deltaTime * MovementVector);
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -MaxX, MaxX), transform.position.y, transform.position.z);
 
     }

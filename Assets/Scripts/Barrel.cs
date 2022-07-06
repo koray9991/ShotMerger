@@ -14,7 +14,7 @@ public class Barrel : MonoBehaviour
    
     void Update()
     {
-        if (Health < 0)
+        if (Health <= 0)
         {
             Destroy(gameObject);
         }
